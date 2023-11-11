@@ -1,6 +1,8 @@
 import os
 
 from flask import Flask, render_template, request
+from flaskr.plot import create_plot
+import plotly.io as pio
 
 
 def create_app(test_config=None):
@@ -26,7 +28,8 @@ def create_app(test_config=None):
     
     @app.route('/', methods=["GET", "POST"])
     def index():
-        print(request.args)
-        return render_template("test.html")
+        plot = create_plot()
+        plot_html = pio.to_html(plot, full_html=False)
+        return render_template("test.html", plot_html=plot_html)
 
     return app

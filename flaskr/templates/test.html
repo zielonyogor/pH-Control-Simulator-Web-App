@@ -7,6 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guwno</title>
     <link rel="stylesheet" href="../static/styles.css">
+    <!-- Include Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
 </head>
 
 <body>
@@ -28,6 +31,8 @@
         <div class="form__fieldset">
             <input class="form__submit form__input" type="submit" value="Proceed">
         </div>
+        <div id="plotly-plot"></div>
+        {{ plot_html|safe }}
     </form>
 </body>
 
