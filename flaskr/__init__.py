@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, render_template, request
 
 
 def create_app(test_config=None):
@@ -24,13 +24,9 @@ def create_app(test_config=None):
     except OSError:
         pass
     
-    @app.route('/')
+    @app.route('/', methods=["GET", "POST"])
     def index():
-        return 'ruchanie'
-
-    # a simple page that says hello
-    @app.route('/hello')
-    def hello():
-        return 'sperma'
+        print(request.args)
+        return render_template("test.html")
 
     return app
