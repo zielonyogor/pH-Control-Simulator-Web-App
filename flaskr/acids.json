@@ -1,0 +1,125 @@
+{
+    "acids":[
+        {
+            "name": "Kwas Azotowy (V)",
+            "symbol": "HNO3",
+            "type": 1,
+            "Ka1": 25,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 63.013,
+            "density_eq_cp": [0.4664, -1.2804, 0.8797, 0.4404, 1.0008],
+            "density_eq_cm": [-0.00062, 0.0367, 0.996],
+            "maximum concentration": 0.99
+        },
+        {
+            "name": "Kwas Bromowodorowy",
+            "symbol": "HBr",
+            "type": 1,
+            "Ka1": 1e9,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 80.91,
+            "density_eq_cp": [0.9849, 0.5198, 1.0122],
+            "density_eq_cm": [0.0542, 1.0043],
+            "maximum concentration": 0.68
+        },
+        {
+            "name": "Kwas Cytrynowy",
+            "symbol": "CH2COOH-C(OH)COOH-CH2COOH",
+            "type": 3,
+            "Ka1": 5.1286e-4,
+            "Ka2": 1.9498e-5,
+            "Ka3": 3.9811e-7,
+            "mass": 192.12,
+            "density_eq_cp": [0.9849, 0.5198, 1.0122],
+            "density_eq_cm": [0.0199, -0.051, 0.0303, 0.0728, 0.9983],
+            "maximum concentration": 0.5 
+        },
+        {
+            "name": "Kwas Fosforowy (V)",
+            "symbol": "H3PO4",
+            "type": 3,
+            "Ka1": 7.5e-3,
+            "Ka2": 6.3e-8,
+            "Ka3": 1.3e-12,
+            "mass": 97.995,
+            "density_eq_cp": [0.3951, 0.4726, 1.0013],
+            "density_eq_cm": [-0.0003, 0.0519, 0.9978],
+            "maximum concentration": 0.99
+        },
+        {
+            "name": "Kwas Jodowodorowy",
+            "symbol": "HI",
+            "type": 1,
+            "Ka1": 1e10,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 127.9124,
+            "density_eq_cp": [1.9568, -0.7443, 1.0941, 0.9627],
+            "density_eq_cm": [0.0002, 0.0915, 1.0006],
+            "maximum concentration": 0.6
+        },
+        {
+            "name": "Kwas Mlekowy",
+            "symbol": "CH3CHOHCOOH",
+            "type": 1,
+            "Ka1": 1.4e-4,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 90.08,
+            "density_eq_cp": [-0.0025, 0.2374, 0.9969],
+            "density_eq_cm": [-0.0003, 0.0208, 0.9972],
+            "maximum concentration": 0.9
+        },
+        {
+            "name": "Kwas Mrowkowy",
+            "symbol": "HCOOH",
+            "type": 1,
+            "Ka1": 1.8e-4,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 46.025,
+            "density_eq_cp": [-0.0419, 0.0237, 0.2402, 0.9998],
+            "density_eq_cm": [-0.0001, 0.0113, 0.9995],
+            "maximum concentration": 0.99
+        },
+        {
+            "name": "Kwas Octowy",
+            "symbol": "CH3COOH",
+            "type": 1,
+            "Ka1": 1.8e-5,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 60.05,
+            "density_eq_cp": [-0.7504, 1.7907, -1.5889, 0.6012, -0.159, 0.1585, 0.998],
+            "density_eq_cm": [-5e-8, 2e-6, -3e-5, 0.0003, 0.0011, 0.0103, 0.9977],
+            "maximum concentration": 0.99
+        },
+        {
+            "name": "Kwas Siarkowy (VI)",
+            "symbol": "H2SO4",
+            "type": 2,
+            "Ka1": 1e3,
+            "Ka2": 1.2e-2,
+            "Ka3": 0,
+            "mass": 98.08,
+            "density_eq_cp": [-1.3272, 0.4271, 2.2057, -1.8669, 0.7922, 0.5993, 0.9996],
+            "density_eq_cm": [-6e-5, 0.0007, 0.0534, 1.0052],
+            "maximum concentration": 0.99
+        },
+        {
+            "name": "Kwas Solny",
+            "symbol": "HCl",
+            "type": 1,
+            "Ka1": 1e7,
+            "Ka2": 0,
+            "Ka3": 0,
+            "mass": 36.46,
+            "density_eq_cp": [0.5032, 0.9976],
+            "density_eq_cm": [0.0152, 1.0034],
+            "maximum concentration": 0.4
+        }
+    ]
+
+}
