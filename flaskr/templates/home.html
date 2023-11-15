@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guwno</title>
     <link rel="stylesheet" href="../static/styles.css">
-    <!-- Include Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     
 </head>
@@ -15,7 +14,7 @@
 <body>
     <img src="../static/misc/dino.jpg" alt="dino" class="big_image">
     <p>JOOOOOOOOOOOOO</p>
-    <form>
+    <form action="/" method = "post">
         <div class="form__fieldset">
             <label for="height" class="form__label">Height of container:</label>
             <input type="number" name="height" id="height" class="form__input" step="0.01">
@@ -31,6 +30,7 @@
         <div class="form__fieldset">
             <input class="form__submit form__input" type="submit" value="Proceed">
         </div>
+
         <div id="plotly-plot"></div>
         {{ plot_html|safe }}
     </form>
