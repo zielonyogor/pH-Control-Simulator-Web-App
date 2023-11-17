@@ -2,6 +2,7 @@ import os
 
 from flask import Flask, render_template, request
 from flaskr.plot import create_plot
+import plotly.express as px
 import plotly.io as pio
 
 
@@ -28,8 +29,14 @@ def create_app(test_config=None):
     
     @app.route('/', methods=["GET", "POST"])
     def index():
-        plot = create_plot()
-        plot_html = pio.to_html(plot, full_html=False)
-        return render_template("test.html", plot_html=plot_html)
+        if request.method == 'POST':
+            height = request.form.get('height')
+
+            fig = create_plot(height)
+
+            plot_html = pio.to_html(fig, full_html=False)
+
+            return render_template('home.html', plot_html=plot_html)
+        return render_template("home.html")
 
     return app

@@ -5,9 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guwno</title>
+    <title>Podstawy Automatyki</title>
     <link rel="stylesheet" href="../static/styles.css">
-    <!-- Include Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     
 </head>
@@ -15,14 +14,14 @@
 <body>
     <img src="../static/misc/dino.jpg" alt="dino" class="big_image">
     <p>JOOOOOOOOOOOOO</p>
-    <form>
+    <form action="/" method = "post">
         <div class="form__fieldset">
             <label for="height" class="form__label">Height of container:</label>
-            <input type="number" name="height" id="height" class="form__input" step="0.01">
+            <input type="number" name="height" id="height" class="form__input" step="0.01" required>
         </div>
         <div class="form__fieldset">
             <label for="substance" class="form__label">What substance:</label>
-            <select name="substance" id="substance" class="form__input form__select">
+            <select name="substance" id="substance" class="form__input form__select" required>
                 <option value="H2SO4">H2SO4</option>
                 <option value="NaCl">NaCl</option>
             </select>
@@ -31,6 +30,7 @@
         <div class="form__fieldset">
             <input class="form__submit form__input" type="submit" value="Proceed">
         </div>
+
         <div id="plotly-plot"></div>
         {{ plot_html|safe }}
     </form>
