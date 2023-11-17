@@ -121,7 +121,7 @@ def choose_acid():
 
 global acid_list
 acid_list = []
-load_data_json("acids.json")
+load_data_json("flaskr\\acids.json")
 
 acid = None
 acid = choose_acid()
