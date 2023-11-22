@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="pl-PL">
 
 <head>
     <meta charset="UTF-8">
@@ -13,27 +13,51 @@
 
 <body>
     <img src="../static/misc/dino.jpg" alt="dino" class="big_image">
-    <p>JOOOOOOOOOOOOO</p>
+
     <form action="/" method = "post">
         <div class="form__fieldset">
-            <label for="height" class="form__label">Height of container:</label>
-            <input type="number" name="height" id="height" class="form__input" step="0.01" required>
-        </div>
-        <div class="form__fieldset">
-            <label for="substance" class="form__label">What substance:</label>
+            <label for="substance" class="form__label">Kwas:</label>
             <select name="substance" id="substance" class="form__input form__select" required>
-                <option value="H2SO4">H2SO4</option>
-                <option value="NaCl">NaCl</option>
+                {% for opt in options %}
+                    <option value={{ opt.name }} pH_min={{ opt.pH_min }}>{{opt.name}}</option>
+                {% endfor %}
             </select>
+        </div>
+
+        <div class="form__fieldset">
+            <label for="pH" class="form__label">Docelowe pH:</label>
+            <input type="range" name="pH" id="pH" class="form__input form__slider" min="0" max="5" step="0.01" value="5" oninput="this.nextElementSibling.value = this.value">
+            <output id="shown_pH">5</output>
         </div>
 
         <div class="form__fieldset">
             <input class="form__submit form__input" type="submit" value="Proceed">
         </div>
 
-        <div id="plotly-plot"></div>
-        {{ plot_html|safe }}
     </form>
+
+    <div id="plotly-plot"></div>
+    {{ plot_html|safe }}
+
+    <script>
+        //zmienianie pH_min i ewentualnie pH na slider podczas zmieniania kwasu
+        document.getElementById('substance').addEventListener('change', function() {
+            var selectedOption = this.options[this.selectedIndex];
+
+            // tu albo zostawiamy zaokrąglanie albo dodajemy do kwasów zaokrąglanie
+            var new_pH_min = parseFloat(selectedOption.getAttribute('pH_min')).toFixed(2);
+
+            var current_pH = parseFloat(document.getElementById('pH').value).toFixed(2);
+
+            document.getElementById('pH').min = new_pH_min;
+            if(current_pH < new_pH_min){
+                document.getElementById('pH').value = new_pH_min;
+                document.getElementById('shown_pH').value = new_pH_min;
+            }
+        });
+        document.getElementById('substance').dispatchEvent(new Event('change'));
+    </script>
+    
 </body>
 
 </html>

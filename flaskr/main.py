@@ -64,7 +64,7 @@ class Acid:
             Ka2 = args[1]
             Ka3 = args[2]
             cH = 10**(-pH)
-            return(cH*cH*cH*cH + Ka1*cH*cH*cH + Ka1*Ka2*cH*cH + Ka1*Ka2*Ka3*cH)/(Ka1*cH*cH + 2*Ka1*Ka2 + 3*Ka1*Ka2*Ka3)
+            return(cH*cH*cH*cH + Ka1*cH*cH*cH + Ka1*Ka2*cH*cH + Ka1*Ka2*Ka3*cH)/(Ka1*cH*cH + 2*Ka1*Ka2*cH + 3*Ka1*Ka2*Ka3)
         match self.type:
             case 1:
                 return calculate_cm1(pH, self.Ka1)
@@ -121,7 +121,7 @@ def choose_acid():
 
 global acid_list
 acid_list = []
-load_data_json("flaskr\\acids.json")
+load_data_json("flaskr//acids.json")
 
 acid = None
 acid = choose_acid()
