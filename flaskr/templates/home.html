@@ -19,7 +19,7 @@
             <label for="substance" class="form__label">Kwas:</label>
             <select name="substance" id="substance" class="form__input form__select" required>
                 {% for opt in options %}
-                    <option value={{ opt.name }} pH_min={{ opt.pH_min }}>{{opt.name}}</option>
+                    <option value="{{ opt.name }}" pH_min={{ opt.pH_min }}>{{opt.name}}</option>
                 {% endfor %}
             </select>
         </div>
@@ -43,7 +43,8 @@
     </form>
 
     <!-- <div id="plotly-plot"></div> -->
-    <div id='graph' class='graph'></div>
+    <div id='graph1' class='graph1'></div>
+    <div id='graph2' class='graph2'></div>
 </body>
     <!-- skrypty -->
 
@@ -58,10 +59,15 @@
             })
             .then(response => response.json())
             .then(data => {
-                var graph = document.getElementById('graph');
-                graph.innerHTML = '';
-                var graphs = JSON.parse(data.graphJSON);
-                Plotly.react('graph', graphs, {});
+                var graphs = data.graphs;
+
+                graphs.forEach(graphsData => {
+                    var graphID = graphsData.id;
+                    var graphJSON = JSON.parse(graphsData.graphJSON);
+                    
+                    Plotly.react(graphID, graphJSON, {});
+                });
+
             })
             .catch(error => console.error('Error:', error));
         }
