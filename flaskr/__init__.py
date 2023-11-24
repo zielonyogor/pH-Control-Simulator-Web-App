@@ -3,7 +3,8 @@ import os
 from flask import Flask, render_template, request
 from flaskr.plot import create_plot
 import plotly.express as px
-import plotly.io as pio
+# import plotly.io as pio
+import plotly
 
 import json
 from math import sqrt, log10
@@ -35,6 +36,7 @@ def create_app(test_config=None):
         pass
     
     load_data_json("flaskr//acids.json")
+    
     @app.route('/', methods=["GET", "POST"])
     def index():
         if request.method == 'POST':
@@ -42,10 +44,14 @@ def create_app(test_config=None):
 
             fig = create_plot(height)
 
-            plot_html = pio.to_html(fig, full_html=False)
+            #plot_html = pio.to_html(fig, full_html=False)
+            graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
 
-            return render_template('home.html', plot_html=plot_html, options=options)
-        return render_template("home.html", options=options)
+            cp = request.form.get('cp_type')
+            print(cp)
+
+            return render_template('home.html', graphJSON=graphJSON, options=options)
+        return render_template("home.html", graphJSON="", options=options)
 
     return app
 

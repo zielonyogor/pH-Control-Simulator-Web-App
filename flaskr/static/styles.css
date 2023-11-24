@@ -48,6 +48,14 @@ body {
     margin: auto;
 }
 
+.button{
+    width: 180px;
+    height: 30px;
+    border: 2px solid rgb(63, 57, 51);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 input[type="range"] {
     width:400px;
   }
