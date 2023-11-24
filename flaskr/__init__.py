@@ -1,9 +1,9 @@
 import os
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from flaskr.plot import create_plot
 import plotly.express as px
-import plotly.io as pio
+import plotly
 
 import json
 from math import sqrt, log10
@@ -11,7 +11,6 @@ from numpy import roots
 
 global options
 options = []
-
 
 def create_app(test_config=None):
     # create and configure the app
@@ -35,19 +34,20 @@ def create_app(test_config=None):
         pass
     
     load_data_json("flaskr//acids.json")
+    
     @app.route('/', methods=["GET", "POST"])
     def index():
         if request.method == 'POST':
+            # tu potrzeba tworzenia wykresu
             height = request.form.get('pH')
-
             fig = create_plot(height)
-
-            plot_html = pio.to_html(fig, full_html=False)
-
-            return render_template('home.html', plot_html=plot_html, options=options)
+            graphJSON = json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+            return jsonify({'graphJSON': graphJSON})
+        
         return render_template("home.html", options=options)
-
+    
     return app
+
 
 
 # to wszystko poniżej użyte tylko do testu przekazywania listy kwasów, trzeba gdzie indziej przechowywać

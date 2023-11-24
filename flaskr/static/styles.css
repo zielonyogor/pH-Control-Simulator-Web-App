@@ -44,8 +44,17 @@ body {
     cursor: pointer;
 }
 
-.plotly__plot{
-    margin: auto;
+.button{
+    width: 180px;
+    height: 30px;
+    border: 2px solid rgb(63, 57, 51);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.graph__note{
+    font-size: 1rem;
+    text-align: center;
 }
 
 input[type="range"] {

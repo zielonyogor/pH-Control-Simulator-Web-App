@@ -14,7 +14,7 @@
 <body>
     <img src="../static/misc/dino.jpg" alt="dino" class="big_image">
 
-    <form action="/" method = "post">
+    <form action="/" method = "post" id="plot_form">
         <div class="form__fieldset">
             <label for="substance" class="form__label">Kwas:</label>
             <select name="substance" id="substance" class="form__input form__select" required>
@@ -31,22 +31,48 @@
         </div>
 
         <div class="form__fieldset">
-            <input class="form__submit form__input" type="submit" value="Proceed">
+            <button type="button" class="button" id="cp_button">Brak zanieczyszczenia</button>
+            <input type="hidden" name="cp_type" id="cp_type" value="Brak zanieczyszczenia">
+
+        </div>
+
+        <div class="form__fieldset">
+            <input class="form__submit form__input" type="button" value="Zatwierdź" onclick="updatePlot()">
         </div>
 
     </form>
 
-    <div id="plotly-plot"></div>
-    {{ plot_html|safe }}
+    <!-- <div id="plotly-plot"></div> -->
+    <div id='graph' class='graph'></div>
+</body>
+    <!-- skrypty -->
+
+    <script>
+        function updatePlot() {
+            fetch('/', {
+                method: 'POST',
+                body: new URLSearchParams(new FormData(document.getElementById('plot_form'))),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                var graph = document.getElementById('graph');
+                graph.innerHTML = '';
+                var graphs = JSON.parse(data.graphJSON);
+                Plotly.react('graph', graphs, {});
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
 
     <script>
         //zmienianie pH_min i ewentualnie pH na slider podczas zmieniania kwasu
         document.getElementById('substance').addEventListener('change', function() {
-            var selectedOption = this.options[this.selectedIndex];
-
+            var option = this.options[this.selectedIndex];
             // tu albo zostawiamy zaokrąglanie albo dodajemy do kwasów zaokrąglanie
-            var new_pH_min = parseFloat(selectedOption.getAttribute('pH_min')).toFixed(2);
-
+            var new_pH_min = parseFloat(option.getAttribute('pH_min')).toFixed(2);
             var current_pH = parseFloat(document.getElementById('pH').value).toFixed(2);
 
             document.getElementById('pH').min = new_pH_min;
@@ -57,7 +83,31 @@
         });
         document.getElementById('substance').dispatchEvent(new Event('change'));
     </script>
-    
-</body>
 
+    <script>
+        var button = document.getElementById('cp_button');
+        var cp_input = document.getElementById('cp_type');
+        button.addEventListener('click', function() {
+            switch(button.textContent){
+                case "Brak zanieczyszczenia":
+                    button.textContent = "Słabe zanieczyszczenie";
+                    cp_input.value = "mild"; //nazwy stężenia (na razie takie, trezba bedzie zmienić)
+                    break;
+                case "Słabe zanieczyszczenie":
+                    button.textContent = "Mocne zanieczyszczenie";
+                    cp_input.value = "heavy";
+                    break;
+                case "Mocne zanieczyszczenie":
+                button.textContent = "Brak zanieczyszczenia";
+                    cp_input.value = "zero";
+                    break;
+                default:
+                    break;
+            }
+        });
+    </script>
+    <script>
+        var graph = document.getElementById('graph');
+        graph.innerHTML = '<p class="graph__note">Tu znajdzie się twój wykres</p>';
+    </script>
 </html>
