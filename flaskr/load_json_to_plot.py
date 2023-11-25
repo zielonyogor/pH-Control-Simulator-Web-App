@@ -27,7 +27,7 @@ def create_plot(acid):
         B = 0.035   # m^(5/2)/s - współczynnik wypływu
 
         Tp = 0.1   # s - czas próbkowania
-        t_sim = 1000   # s - czas symulacji
+        t_sim = 500   # s - czas symulacji
         N = int(t_sim/Tp) + 1   # ilość testów
         t  = [0.0]   # s - wektor czasu
 
@@ -89,45 +89,33 @@ def create_plot(acid):
             Qo.append(B*sqrt(h[-1]))
 
         pH_doc_list = [pH_doc for i in range(len(t))] 
-        c_doc_list = [c_doc for i in range(len(t))]
-
-    
-    # data = {"Poziom kwasu": h}
-    # df = pd.DataFrame(data, index=t)
-    # fig1 = px.line(df, labels={"index":"t[s]", "value":"h[m]", "variable":"Funkcja"}, title="Wysokość", width=1050, height=450)
-
-    # data = {"Nateżenie kwasu": Qd_acid,
-    #         "Natężenie zakłócenia": Qd_pollutant,
-    #         "Natężenie odpływu": Qo}
-    # df = pd.DataFrame(data, index=t)
-    
-    # fig2 = px.line(df, labels={"index":"t[s]", "value":"Q[m³/s]", "variable":"Funkcja"}, title="Natężenie dopływu i odpływu")
-
-    # data = {"Napięcie regulatora" : u_pi,
-    #         "Napięcie aktualne": u}
-    # df = pd.DataFrame(data, index=t)
-    # fig3 = px.line(df, labels={"index":"t[s]", "value":"I[V]", "variable":"Funkcja"}, title="Napięcie")
-
-    # data = {"Początkowe pH" : pH,
-    #         "Docelowe pH": pH_doc}
-    # df = pd.DataFrame(data, index=t)
-    # fig4 = px.line(df, labels={"index":"t[s]", "value":"pH", "variable":"Funkcja"}, title="pH")
+        # c_doc_list = [c_doc for i in range(len(t))]
 
     # Create subplots
-    fig = sp.make_subplots(rows=2, cols=2, subplot_titles=["Wysokość", "Natężenie dopływu i odpływu", "Napięcie", "pH"])
+    fig = sp.make_subplots(rows=2, cols=2, subplot_titles=['pH', 'Wysokość', 'Natężenie dopływu i odpływu', 'Napięcie'])
 
     # Add traces to each subplot
-    fig.add_trace(go.Scatter(x=t, y=h, mode='lines', name='Poziom kwasu'), row=1, col=1)
-    fig.add_trace(go.Scatter(x=t, y=Qd_acid, mode='lines', name='Nateżenie kwasu'), row=1, col=2)
-    fig.add_trace(go.Scatter(x=t, y=Qd_pollutant, mode='lines', name='Natężenie zakłócenia'), row=1, col=2)
-    fig.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='Natężenie odpływu'), row=1, col=2)
-    fig.add_trace(go.Scatter(x=t, y=u_pi, mode='lines', name='Napięcie regulatora'), row=2, col=1)
-    fig.add_trace(go.Scatter(x=t, y=u, mode='lines', name='Napięcie aktualne'), row=2, col=1)
-    fig.add_trace(go.Scatter(x=t, y=pH, mode='lines', name='Początkowe pH'), row=2, col=2)
-    fig.add_trace(go.Scatter(x=t, y=pH_doc_list, mode='lines', name='Docelowe pH'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=t, y=pH, mode='lines', name='Początkowe pH', legendgroup='1'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=t, y=pH_doc_list, mode='lines', name='Docelowe pH', legendgroup='1'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=t, y=h, mode='lines', name='Poziom kwasu', showlegend=True, legendgroup='2'), row=1, col=2)
+    fig.add_trace(go.Scatter(x=t, y=Qd_acid, mode='lines', name='Nateżenie kwasu', legendgroup='3'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=t, y=Qd_pollutant, mode='lines', name='Natężenie zakłócenia', legendgroup='3'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='Natężenie odpływu', legendgroup='3'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=t, y=u_pi, mode='lines', name='Napięcie regulatora', legendgroup='4'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=t, y=u, mode='lines', name='Napięcie aktualne', legendgroup='4'), row=2, col=2)
 
     # Update layout
-    fig.update_layout(width=1230, height=920)
+    fig.update_layout(title_text=acid.name, title_font=dict(size=16, color='#F7F3E3'), width=1180, height=940, paper_bgcolor="#537d8d", legend_tracegroupgap = 180)
 
+    # Update x and y axes
+    fig.update_xaxes(automargin=True, color='#F7F3E3', tickcolor='#F7F3E3')
+    fig.update_yaxes(automargin=True, color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
+
+    # Update subplot titles to white
+    fig.update_annotations(font=dict(color='#F7F3E3', size=24))
+
+    for col in [1, 2]:
+        for row in [1, 2]:
+            fig.add_annotation(dict(x=col, y=row, xref=f'x{col}', yref=f'y{row}', text=f'trace {col + row}', showarrow=False))
 
     return fig
