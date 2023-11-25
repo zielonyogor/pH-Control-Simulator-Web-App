@@ -12,8 +12,6 @@
 </head>
 
 <body>
-    <img src="../static/misc/dino.jpg" alt="dino" class="big_image">
-
     <form action="/" method = "post" id="plot_form">
         <div class="form__fieldset">
             <label for="substance" class="form__label">Kwas:</label>
@@ -32,8 +30,12 @@
 
         <div class="form__fieldset">
             <button type="button" class="button" id="cp_button">Brak zanieczyszczenia</button>
-            <input type="hidden" name="cp_type" id="cp_type" value="Brak zanieczyszczenia">
+            <input type="hidden" name="cp_level" id="cp_level" value="zero">
+        </div>
 
+        <div class="form__fieldset" id="cp_type_button" style="display: none;">
+            <button type="button" class="button" id="type_button">Sinusoidalne</button>
+            <input type="hidden" name="cp_type" id="cp_type" value="sin">
         </div>
 
         <div class="form__fieldset">
@@ -42,7 +44,6 @@
 
     </form>
 
-    <!-- <div id="plotly-plot"></div> -->
     <div id='graph1' class='graph1'></div>
     <div id='graph2' class='graph2'></div>
 </body>
@@ -91,29 +92,52 @@
     </script>
 
     <script>
-        var button = document.getElementById('cp_button');
-        var cp_input = document.getElementById('cp_type');
-        button.addEventListener('click', function() {
-            switch(button.textContent){
-                case "Brak zanieczyszczenia":
-                    button.textContent = "Słabe zanieczyszczenie";
-                    cp_input.value = "mild"; //nazwy stężenia (na razie takie, trezba bedzie zmienić)
-                    break;
-                case "Słabe zanieczyszczenie":
-                    button.textContent = "Mocne zanieczyszczenie";
-                    cp_input.value = "heavy";
-                    break;
-                case "Mocne zanieczyszczenie":
-                button.textContent = "Brak zanieczyszczenia";
-                    cp_input.value = "zero";
-                    break;
-                default:
-                    break;
-            }
-        });
+        document.addEventListener('DOMContentLoaded', function(){
+            var button = document.getElementById('cp_button');
+            var cp_input = document.getElementById('cp_level');
+            var type_button = document.getElementById('cp_type_button');
+            button.addEventListener('click', function() {
+                switch(button.textContent){
+                    case "Brak zanieczyszczenia":
+                        button.textContent = "Słabe zanieczyszczenie";
+                        cp_input.value = "mild"; //nazwy stężenia (na razie takie, trezba bedzie zmienić)
+                        type_button.style.display = 'block';
+                        break;
+                    case "Słabe zanieczyszczenie":
+                        button.textContent = "Mocne zanieczyszczenie";
+                        cp_input.value = "heavy";
+                        break;
+                    case "Mocne zanieczyszczenie":
+                    button.textContent = "Brak zanieczyszczenia";
+                        cp_input.value = "zero";
+                        type_button.style.display = 'none';
+                        break;
+                    default:
+                        break;
+                }
+            });
+        })
+        
     </script>
+
     <script>
+        var button = document.getElementById('type_button');
+        var cp_type = document.getElementById('cp_type');
+        button.addEventListener('click', function() {
+            if(button.textContent == "Sinusoidalne"){
+                button.textContent = "Losowo";
+                cp_type.value = "rand";
+            }
+            else{
+                button.textContent = "Sinusoidalne";
+                cp_type.value = "sin";
+            }
+        })
+    </script>
+
+    <!--to na razie nie dziala-->
+    <!-- <script>
         var graph = document.getElementById('graph');
         graph.innerHTML = '<p class="graph__note">Tu znajdzie się twój wykres</p>';
-    </script>
+    </script> -->
 </html>
