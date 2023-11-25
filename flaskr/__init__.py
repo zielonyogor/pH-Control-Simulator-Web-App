@@ -36,13 +36,12 @@ def create_app(test_config=None):
 
             acid_name = request.form.get('substance')
             acid = next((acid for acid in ljtp.acid_list if acid.name == acid_name), None)
-            [fig1, fig2, fig3, fig4, fig5] = ljtp.create_plot(acid)
+
+
+
+            fig = ljtp.create_plot(acid)
             
-            return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)},
-                                       {'id': 'graph2', 'graphJSON': json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)},
-                                       {'id': 'graph3', 'graphJSON': json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)},
-                                       {'id': 'graph4', 'graphJSON': json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)},
-                                       {'id': 'graph5', 'graphJSON': json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)}]})
+            return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)}]})
         
         return render_template("home.html", options=ljtp.acid_list)
     

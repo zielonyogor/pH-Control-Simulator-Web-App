@@ -1,8 +1,12 @@
+import plotly.subplots as sp
+import plotly.graph_objects as go
 import plotly.express as px
+import plotly.io as pio
 from math import sqrt
 import json
 import pandas as pd
 pd.options.plotting.backend = "plotly"
+pio.templates.default = "ggplot2"
 
 import flaskr.acid as acd
 
@@ -72,40 +76,58 @@ def create_plot(acid):
             u.append(max(u_min, min(u_max, u_pi[-1])))
             Qd_acid.append(((Qd_acid_max-Qd_acid_min)/(u_max - u_min))*(u[-1]- u_min) + Qd_acid_min)
             h.append(max(h_min, min(h_max, (Tp*(Qd_acid[-1] + Qd_pollutant[-1] - Qo[-1]))/A + h[-1])))
+            
+            
+            
             cd_pollutant.append(cd_pollutant[-1])   # jak wyżej pisałem że trzeba zaimplementować różne zmienianie tutaj
+            
+            
+            
             c.append(Tp*((Qd_acid[-1]*(cd_acid-c[-1]) + Qd_pollutant[-1]*(cd_pollutant[-1]-c[-1]))/(h[-1]*A))+c[-1])
             pH.append(acid.calculate_cp_to_pH(c[-1]))
             Qd_pollutant.append(Qd_pollutant[-1])   # tu też można zrobić coś żeby to nie było stałe ale w sumie to nie chciał chyba
             Qo.append(B*sqrt(h[-1]))
 
-        pH_doc_list = [pH_doc for i in range(len(t))]
+        pH_doc_list = [pH_doc for i in range(len(t))] 
         c_doc_list = [c_doc for i in range(len(t))]
 
+    
+    # data = {"Poziom kwasu": h}
+    # df = pd.DataFrame(data, index=t)
+    # fig1 = px.line(df, labels={"index":"t[s]", "value":"h[m]", "variable":"Funkcja"}, title="Wysokość", width=1050, height=450)
 
-    data = {"Poziom kwasu": h}
-    df = pd.DataFrame(data, index=t)
-    fig1 = px.line(df, labels={"index":"t[s]", "value":"h[m]", "variable":"Funkcja"}, title="Wysokość")
+    # data = {"Nateżenie kwasu": Qd_acid,
+    #         "Natężenie zakłócenia": Qd_pollutant,
+    #         "Natężenie odpływu": Qo}
+    # df = pd.DataFrame(data, index=t)
+    
+    # fig2 = px.line(df, labels={"index":"t[s]", "value":"Q[m³/s]", "variable":"Funkcja"}, title="Natężenie dopływu i odpływu")
 
-    data = {"Nateżenie kwasu": Qd_acid,
-            "Natężenie zakłócenia": Qd_pollutant,
-            "Natężenie odpływu": Qo}
-    df = pd.DataFrame(data, index=t)
-    fig2 = px.line(df, labels={"index":"t[s]", "value":"Q[m³/s]", "variable":"Funkcja"}, title="Natężenie dopływu i odpływu")
+    # data = {"Napięcie regulatora" : u_pi,
+    #         "Napięcie aktualne": u}
+    # df = pd.DataFrame(data, index=t)
+    # fig3 = px.line(df, labels={"index":"t[s]", "value":"I[V]", "variable":"Funkcja"}, title="Napięcie")
 
-    data = {"Napięcie regulatora" : u_pi,
-            "Napięcie aktualne": u}
-    df = pd.DataFrame(data, index=t)
-    fig3 = px.line(df, labels={"index":"t[s]", "value":"I[V]", "variable":"Funkcja"}, title="Napięcie")
+    # data = {"Początkowe pH" : pH,
+    #         "Docelowe pH": pH_doc}
+    # df = pd.DataFrame(data, index=t)
+    # fig4 = px.line(df, labels={"index":"t[s]", "value":"pH", "variable":"Funkcja"}, title="pH")
+
+    # Create subplots
+    fig = sp.make_subplots(rows=2, cols=2, subplot_titles=["Wysokość", "Natężenie dopływu i odpływu", "Napięcie", "pH"])
+
+    # Add traces to each subplot
+    fig.add_trace(go.Scatter(x=t, y=h, mode='lines', name='Poziom kwasu'), row=1, col=1)
+    fig.add_trace(go.Scatter(x=t, y=Qd_acid, mode='lines', name='Nateżenie kwasu'), row=1, col=2)
+    fig.add_trace(go.Scatter(x=t, y=Qd_pollutant, mode='lines', name='Natężenie zakłócenia'), row=1, col=2)
+    fig.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='Natężenie odpływu'), row=1, col=2)
+    fig.add_trace(go.Scatter(x=t, y=u_pi, mode='lines', name='Napięcie regulatora'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=t, y=u, mode='lines', name='Napięcie aktualne'), row=2, col=1)
+    fig.add_trace(go.Scatter(x=t, y=pH, mode='lines', name='Początkowe pH'), row=2, col=2)
+    fig.add_trace(go.Scatter(x=t, y=pH_doc_list, mode='lines', name='Docelowe pH'), row=2, col=2)
+
+    # Update layout
+    fig.update_layout(width=1230, height=920)
 
 
-    data = {"Początkowe pH" : pH,
-            "Docelowe pH": pH_doc_list}
-    df = pd.DataFrame(data, index=t)
-    fig4 = px.line(df, labels={"index":"t[s]", "value":"pH", "variable":"Funkcja"}, title="pH")
-
-    data = {"Początkowe stężenie " : c,
-            "Docelowe stężenie": c_doc_list}
-    df = pd.DataFrame(data, index=t)
-    fig5 = px.line(df, labels={"index":"t[s]", "value":"c[%]", "variable":"Funkcja"}, title="Stężenie")
-
-    return [fig1, fig2, fig3, fig4, fig5]
+    return fig
