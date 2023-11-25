@@ -1,7 +1,10 @@
 import plotly.express as px
 from math import sqrt
-import flaskr.acid as acd
 import json
+import pandas as pd
+pd.options.plotting.backend = "plotly"
+
+import flaskr.acid as acd
 
 global acid_list
 acid_list = []
@@ -78,29 +81,31 @@ def create_plot(acid):
         pH_doc_list = [pH_doc for i in range(len(t))]
         c_doc_list = [c_doc for i in range(len(t))]
 
-    fig1 = px.line(x=t, y=h, labels={"x": "t [s]", "y": "h [m]"})
 
-    fig2 = px.scatter(x=t, y=Qd_acid, labels={"x": "t", "value": "Q", "variable": "Legenda:"})
-    #fig2 = px.add_scatter(y=Qd_pollutant)
+    data = {"Poziom kwasu": h}
+    df = pd.DataFrame(data, index=t)
+    fig1 = px.line(df, labels={"index":"t[s]", "value":"h[m]", "variable":"Funkcja"}, title="Wysokość")
 
-    fig2.update_traces(
-        name='Qd_acid',
-        mode='lines',
-        error_y=dict(color='black', width=5, thickness=1),
-        line=dict(color='blue', width=3),
-        showlegend=True
-    )
+    data = {"Nateżenie kwasu": Qd_acid,
+            "Natężenie zakłócenia": Qd_pollutant,
+            "Natężenie odpływu": Qo}
+    df = pd.DataFrame(data, index=t)
+    fig2 = px.line(df, labels={"index":"t[s]", "value":"Q[m³/s]", "variable":"Funkcja"}, title="Natężenie dopływu i odpływu")
 
-    fig2.update_layout(
-        xaxis_title='t [s]',
-        yaxis_title='Q [m³/s]',
-        title=acid.name,
-        hovermode="x"
-    )
+    data = {"Napięcie regulatora" : u_pi,
+            "Napięcie aktualne": u}
+    df = pd.DataFrame(data, index=t)
+    fig3 = px.line(df, labels={"index":"t[s]", "value":"I[V]", "variable":"Funkcja"}, title="Napięcie")
 
-    fig1 = px.line(x=t, y=h, labels={"x": "t [s]", "y": "h [m]"})
-    fig3 = px.line(x=t, y=[u_pi, u], labels={"x": "t [s]", "y": "Y-axis"})
-    fig4 = px.line(x=t, y=[pH, pH_doc_list], labels={"x": "t [s]", "y": "Y-axis"})
-    fig5 = px.line(x=t, y=[c, c_doc_list], labels={"x": "t [s]", "y": "Y-axis"})
+
+    data = {"Początkowe pH" : pH,
+            "Docelowe pH": pH_doc_list}
+    df = pd.DataFrame(data, index=t)
+    fig4 = px.line(df, labels={"index":"t[s]", "value":"pH", "variable":"Funkcja"}, title="pH")
+
+    data = {"Początkowe stężenie " : c,
+            "Docelowe stężenie": c_doc_list}
+    df = pd.DataFrame(data, index=t)
+    fig5 = px.line(df, labels={"index":"t[s]", "value":"c[%]", "variable":"Funkcja"}, title="Stężenie")
 
     return [fig1, fig2, fig3, fig4, fig5]
