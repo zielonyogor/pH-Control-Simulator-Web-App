@@ -24,28 +24,29 @@
 
         <div class="form__fieldset">
             <label for="cp" class="form__label">Stężenie kwasu:</label>
-            <input type="range" name="cp" id="cp" class="form__input form__slider" min="0" max="1" step="0.01" value="0.5" oninput="this.nextElementSibling.value = (this.value*100).toFixed(0)+'%'">
-            <output id="shown_cp">50%</output>
+            <output class="number" id="shown_cp">50%</output>
+            <input type="range" name="cp" id="cp" class="form__input form__slider" min="0" max="1" step="0.01" value="0.5" oninput="this.previousElementSibling.value = (this.value*100).toFixed(0)+'%'">
+            
         </div>
 
         <div class="form__fieldset">
-            <button type="button" class="button" id="cp_button">Słabe zakłócenie</button>
+            <button type="button" class="form__input button" id="cp_button">Słabe zakłócenie</button>
             <input type="hidden" name="cp_level" id="cp_level" value="mild">
         </div>
 
         <div class="form__fieldset" id="cp_type_button">
-            <button type="button" class="button" id="type_button">Sinusoidalne</button>
+            <button type="button" class="form__input button" id="type_button">Sinusoidalne</button>
             <input type="hidden" name="cp_type" id="cp_type" value="sin">
         </div>
         
         <div class="form__fieldset">
             <label for="pH" class="form__label">Docelowe pH:</label>
             <input type="range" name="pH" id="pH" class="form__input form__slider" min="0" max="5" step="0.01" value="5" oninput="this.nextElementSibling.value = this.value">
-            <output id="shown_pH">5</output>
+            <output class="number" id="shown_pH">5</output>
         </div>
 
         <div class="form__fieldset">
-            <button type="button" class="button" id="control_button">PI</button>
+            <button type="button" class="form__input button" id="control_button">PI</button>
             <input type="hidden" name="control_system" id="control_system" value="pi">
         </div>
 
