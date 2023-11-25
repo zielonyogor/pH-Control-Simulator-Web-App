@@ -1,8 +1,7 @@
 import os
 
 from flask import Flask, render_template, request, jsonify
-from flaskr.plot import create_plot
-import flaskr.main as m         # NOTE: plik main, myśle żeby zmienic nazwę
+import flaskr.plot as plot         
 import plotly.express as px
 import plotly
 
@@ -11,8 +10,6 @@ from math import sqrt, log10
 from numpy import roots
 
 
-global acid
-acid = None
 
 def create_app(test_config=None):
     # create and configure the app
@@ -35,29 +32,22 @@ def create_app(test_config=None):
     except OSError:
         pass
     
-    m.load_data_json("flaskr//acids.json")
+    plot.load_data_json("flaskr//acids.json")
     
     @app.route('/', methods=["GET", "POST"])
     def index():
         if request.method == 'POST':
-            # tu potrzeba tworzenia wykresu
 
             acid_name = request.form.get('substance')
-            for i in range(len(m.acid_list)):
-                if m.acid_list[i].name == acid_name:
-                    acid = m.acid_list[i]
-
-            [fig1, fig2] = create_plot(acid)
+            acid = next((acid for acid in plot.acid_list if acid.name == acid_name), None)
+            [fig1, fig2, fig3, fig4, fig5] = plot.create_plot(acid)
             
-
-            # tu potrzeba tworzenia wykresu
-            height = request.form.get('pH')
-            
-            graphJSON1 = json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)
-            graphJSON2 = json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)
-            return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': graphJSON1},
-                                       {'id': 'graph2', 'graphJSON': graphJSON2}]})
+            return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)},
+                                       {'id': 'graph2', 'graphJSON': json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)},
+                                       {'id': 'graph3', 'graphJSON': json.dumps(fig3, cls=plotly.utils.PlotlyJSONEncoder)},
+                                       {'id': 'graph4', 'graphJSON': json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)},
+                                       {'id': 'graph5', 'graphJSON': json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)}]})
         
-        return render_template("home.html", options=m.acid_list)
+        return render_template("home.html", options=plot.acid_list)
     
     return app
