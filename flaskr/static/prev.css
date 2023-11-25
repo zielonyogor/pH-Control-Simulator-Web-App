@@ -1,0 +1,78 @@
+html {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #F7F3E3;
+    
+}
+
+body {
+    margin: 0 auto;
+    color: #1A1D1A;
+}
+
+* {
+    box-sizing: border-box;
+ }
+
+.column{
+    float: left;
+    padding: 10px;
+    height: 1000px;
+}
+
+.plot__form{
+    width: 30%;
+}
+
+.plots{
+    width: 70%;
+}
+
+.graph{
+    width: 50%;
+}
+
+.form__fieldset{
+    padding: 20px 20px;
+}
+
+.form__fieldset:not(:last-of-type){
+    border-bottom: 1px solid #111111;
+}
+
+.form__label{
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.form__input{
+    font-size: 1rem;
+}
+
+.form__select{
+    text-align: center;
+    padding: 4px 2px;
+}
+
+.form__submit{
+    padding: 8px 16px;
+    border: 2px solid rgb(196, 109, 94);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button{
+    width: 180px;
+    height: 30px;
+    border: 2px solid rgb(63, 57, 51);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.graph__note{
+    font-size: 1rem;
+    text-align: center;
+}
+
+input[type="range"] {
+    width:400px;
+  }
