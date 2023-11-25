@@ -1,14 +1,10 @@
 import os
 
 from flask import Flask, render_template, request, jsonify
-import flaskr.plot as plot         
-import plotly.express as px
 import plotly
-
 import json
-from math import sqrt, log10
-from numpy import roots
 
+import flaskr.load_json_to_plot as ljtp
 
 
 def create_app(test_config=None):
@@ -32,15 +28,15 @@ def create_app(test_config=None):
     except OSError:
         pass
     
-    plot.load_data_json("flaskr//acids.json")
+    ljtp.load_data_json("flaskr//acids.json")
     
     @app.route('/', methods=["GET", "POST"])
     def index():
         if request.method == 'POST':
 
             acid_name = request.form.get('substance')
-            acid = next((acid for acid in plot.acid_list if acid.name == acid_name), None)
-            [fig1, fig2, fig3, fig4, fig5] = plot.create_plot(acid)
+            acid = next((acid for acid in ljtp.acid_list if acid.name == acid_name), None)
+            [fig1, fig2, fig3, fig4, fig5] = ljtp.create_plot(acid)
             
             return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)},
                                        {'id': 'graph2', 'graphJSON': json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)},
@@ -48,6 +44,6 @@ def create_app(test_config=None):
                                        {'id': 'graph4', 'graphJSON': json.dumps(fig4, cls=plotly.utils.PlotlyJSONEncoder)},
                                        {'id': 'graph5', 'graphJSON': json.dumps(fig5, cls=plotly.utils.PlotlyJSONEncoder)}]})
         
-        return render_template("home.html", options=plot.acid_list)
+        return render_template("home.html", options=ljtp.acid_list)
     
     return app
