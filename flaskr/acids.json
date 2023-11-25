@@ -22,11 +22,11 @@
       "mass": 80.91,
       "density_eq_cp": [0.9849, 0.5198, 1.0122],
       "density_eq_cm": [0.0542, 1.0043],
-      "maximum concentration": 0.68
+      "maximum concentration": 0.69
     },
     {
       "name": "Kwas Cytrynowy",
-      "symbol": "CH2COOH-C(OH)COOH-CH2COOH",
+      "symbol": "C6H8O7",
       "type": 3,
       "Ka1": 5.1286e-4,
       "Ka2": 1.9498e-5,

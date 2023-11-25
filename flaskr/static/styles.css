@@ -1,62 +1,38 @@
 html {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #1de7ee;
+    background-color: #F7F3E3;
 }
 
 body {
-    max-width: 1000px;
     margin: 0 auto;
+    color: #1A1D1A;
 }
 
-.big_image{
-    width: 400px;
-    border-radius: 20px;
-    /* float: left; */
-    margin-left: 20px;
-    margin-right: 20px;
+* {
+    box-sizing: border-box;
 }
 
-.form__fieldset{
-    padding: 20px 20px;
+.column{
+    float: left;
+    padding: 10px;
+    height: 1000px;
 }
 
-.form__fieldset:not(:last-of-type){
-    border-bottom: 1px solid #111111;
+.plot__form{
+    position: fixed;
+    width: 30%;
 }
 
-.form__label{
-    font-weight: bold;
-    margin-right: 20px;
+.plots{
+    width: 70%;
+    margin-left: 30%; /*to zależy od plot__form width%*/
 }
 
-.form__input{
-    font-size: 1rem;
-}
-
-.form__select{
-    padding: 4px 2px;
-}
-
-.form__submit{
-    padding: 8px 16px;
-    border: 2px solid rgb(125, 10, 192);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.button{
-    width: 180px;
-    height: 30px;
-    border: 2px solid rgb(63, 57, 51);
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.graph__note{
-    font-size: 1rem;
-    text-align: center;
+.graph{
+    width: 80%;
+    margin: auto;
 }
 
 input[type="range"] {
-    width:400px;
+    width:300px;
   }
