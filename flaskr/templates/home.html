@@ -15,7 +15,7 @@
     <form action="/" method = "post" id="plot_form" class="column plot__form">
         <div class="form__fieldset">
             <label for="substance" class="form__label">Kwas:</label>
-            <select name="substance" id="substance" class="form__input form__select" required>
+            <select name="substance" id="substance" class=" form__select" required>
                 {% for opt in options %}
                     <option value="{{ opt.name }}" pH_min={{ opt.pH_min }} cp_min={{ opt.cp_min }} cp_max={{ opt.cp_max }}>{{opt.name}} - {{opt.symbol}}</option>
                 {% endfor %}
@@ -24,8 +24,8 @@
 
         <div class="form__fieldset">
             <label for="cp" class="form__label">Stężenie kwasu:</label>
-            <input type="range" name="cp" id="cp" class="form__input form__slider" min="0" max="1" step="0.01" value="0.5" oninput="this.nextElementSibling.value = (this.value*100).toFixed(0)+'%'">
-            <output id="shown_cp">50%</output>
+            <output class="number" id="shown_cp">50%</output>
+            <input type="range" name="cp" id="cp" class="form__slider" min="0" max="1" step="0.01" value="0.5" oninput="this.previousElementSibling.value = (this.value*100).toFixed(0)+'%'">
         </div>
 
         <div class="form__fieldset">
@@ -40,8 +40,8 @@
         
         <div class="form__fieldset">
             <label for="pH" class="form__label">Docelowe pH:</label>
-            <input type="range" name="pH" id="pH" class="form__input form__slider" min="0" max="5" step="0.01" value="5" oninput="this.nextElementSibling.value = this.value">
-            <output id="shown_pH">5</output>
+            <output class="number" id="shown_pH">5</output>
+            <input type="range" name="pH" id="pH" class="form__slider" min="0" max="5" step="0.01" value="5" oninput="this.previousElementSibling.value = this.value">
         </div>
 
         <div class="form__fieldset">
@@ -50,7 +50,7 @@
         </div>
 
         <div class="form__fieldset">
-            <input class="form__submit form__input" type="button" value="Zatwierdź" onclick="updatePlot()">
+            <input class="form__submit button" type="button" value="Zatwierdź" onclick="updatePlot()">
         </div>
 
     </form>
@@ -141,10 +141,10 @@
         var cp_type = document.getElementById('cp_type');
         cp_button.addEventListener('click', function() {
             if(cp_button.textContent == "Sinusoidalne"){
-                cp_button.textContent = "Losowo";
+                cp_button.textContent = "Losowe";
                 cp_type.value = "rand";
             }
-            else if(cp_button.textContent == "Losowo"){
+            else if(cp_button.textContent == "Losowe"){
                 cp_button.textContent = "Stałe";
                 cp_type.value = "const";
             }
