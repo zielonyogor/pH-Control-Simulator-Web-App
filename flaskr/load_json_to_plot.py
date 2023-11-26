@@ -8,6 +8,7 @@ import pandas as pd
 pd.options.plotting.backend = "plotly"
 pio.templates.default = "ggplot2"
 
+
 import flaskr.acid as acd
 
 global acid_list
@@ -27,7 +28,7 @@ def create_plot(acid):
         B = 0.035   # m^(5/2)/s - współczynnik wypływu
 
         Tp = 0.1   # s - czas próbkowania
-        t_sim = 500   # s - czas symulacji
+        t_sim = 50000   # s - czas symulacji
         N = int(t_sim/Tp) + 1   # ilość testów
         t  = [0.0]   # s - wektor czasu
 
@@ -91,31 +92,39 @@ def create_plot(acid):
         pH_doc_list = [pH_doc for i in range(len(t))] 
         # c_doc_list = [c_doc for i in range(len(t))]
 
-    # Create subplots
-    fig = sp.make_subplots(rows=2, cols=2, subplot_titles=['pH', 'Wysokość', 'Natężenie dopływu i odpływu', 'Napięcie'])
 
-    # Add traces to each subplot
-    fig.add_trace(go.Scatter(x=t, y=pH, mode='lines', name='Początkowe pH', legendgroup='1'), row=1, col=1)
-    fig.add_trace(go.Scatter(x=t, y=pH_doc_list, mode='lines', name='Docelowe pH', legendgroup='1'), row=1, col=1)
-    fig.add_trace(go.Scatter(x=t, y=h, mode='lines', name='Poziom kwasu', showlegend=True, legendgroup='2'), row=1, col=2)
-    fig.add_trace(go.Scatter(x=t, y=Qd_acid, mode='lines', name='Nateżenie kwasu', legendgroup='3'), row=2, col=1)
-    fig.add_trace(go.Scatter(x=t, y=Qd_pollutant, mode='lines', name='Natężenie zakłócenia', legendgroup='3'), row=2, col=1)
-    fig.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='Natężenie odpływu', legendgroup='3'), row=2, col=1)
-    fig.add_trace(go.Scatter(x=t, y=u_pi, mode='lines', name='Napięcie regulatora', legendgroup='4'), row=2, col=2)
-    fig.add_trace(go.Scatter(x=t, y=u, mode='lines', name='Napięcie aktualne', legendgroup='4'), row=2, col=2)
+    fig1 = sp.make_subplots(rows=1, cols=1, subplot_titles=['pH'])
+    fig1.add_trace(go.Scatter(x=t, y=pH, mode='lines', name='Początkowe pH'), row=1, col=1)
+    fig1.add_trace(go.Scatter(x=t, y=pH_doc_list, mode='lines', name='Docelowe pH'), row=1, col=1)
+    fig1.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=600, height=500, paper_bgcolor="#537d8d", legend=dict(x=0.6, y=0.9), showlegend=True)
+    fig1.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3')
+    fig1.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
+    fig1.update_annotations(font=dict(color='#F7F3E3', size=24))
 
-    # Update layout
-    fig.update_layout(title_text=acid.name, title_font=dict(size=16, color='#F7F3E3'), width=1180, height=940, paper_bgcolor="#537d8d", legend_tracegroupgap = 180)
+    fig2 = sp.make_subplots(rows=1, cols=1, subplot_titles=['Wysokość'])
+    fig2.add_trace(go.Scatter(x=t, y=h, mode='lines', name='Poziom kwasu'), row=1, col=1)
+    fig2.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=600, height=500, paper_bgcolor="#537d8d", legend=dict(x=0.6, y=0.1), showlegend=True)
+    fig2.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3')
+    fig2.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
+    fig2.update_annotations(font=dict(color='#F7F3E3', size=24))
 
-    # Update x and y axes
-    fig.update_xaxes(automargin=True, color='#F7F3E3', tickcolor='#F7F3E3')
-    fig.update_yaxes(automargin=True, color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
 
-    # Update subplot titles to white
-    fig.update_annotations(font=dict(color='#F7F3E3', size=24))
+    fig3 = sp.make_subplots(rows=1, cols=1, subplot_titles=['Natężenie dopływu i odpływu'])
+    fig3.add_trace(go.Scatter(x=t, y=Qd_acid, mode='lines', name='Nateżenie kwasu'), row=1, col=1)
+    fig3.add_trace(go.Scatter(x=t, y=Qd_pollutant, mode='lines', name='Natężenie zakłócenia'), row=1, col=1)
+    fig3.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='Natężenie odpływu'), row=1, col=1)
+    fig3.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=600, height=500, paper_bgcolor="#537d8d", legend=dict(x=0.6, y=0.1), showlegend=True)
+    fig3.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3')
+    fig3.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
+    fig3.update_annotations(font=dict(color='#F7F3E3', size=24))
+  
+  
+    fig4 = sp.make_subplots(rows=1, cols=1, subplot_titles=['Napięcie'])
+    fig4.add_trace(go.Scatter(x=t, y=u_pi, mode='lines', name='Napięcie regulatora'), row=1, col=1)
+    fig4.add_trace(go.Scatter(x=t, y=u, mode='lines', name='Napięcie aktualne'), row=1, col=1)
+    fig4.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=600, height=500, paper_bgcolor="#537d8d", legend=dict(x=0.6, y=0.1), showlegend=True)
+    fig4.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3')
+    fig4.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f')
+    fig4.update_annotations(font=dict(color='#F7F3E3', size=24))
 
-    for col in [1, 2]:
-        for row in [1, 2]:
-            fig.add_annotation(dict(x=col, y=row, xref=f'x{col}', yref=f'y{row}', text=f'trace {col + row}', showarrow=False))
-
-    return fig
+    return [fig1, fig2, fig3, fig4]
