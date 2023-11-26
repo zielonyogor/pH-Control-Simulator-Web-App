@@ -50,10 +50,14 @@
         </div>
 
         <div class="form__fieldset">
-            <input class="form__submit button" type="button" value="Zatwierdź" onclick="updatePlot()">
+            <input class="form__submit button" type="button" id="confirm" value="Zatwierdź" onclick="updatePlot()">
         </div>
-
     </form>
+
+    <div id="loader-overlay" class="loader-overlay">
+        <div class="cssload-loading"><i></i><i></i></div>
+    </div>
+
     <div class="column plots" id="graphs">
         <div id='graph1' class='graph'></div>
         <div id='graph2' class='graph'></div>
@@ -65,6 +69,7 @@
 
     <script>
         function updatePlot() {
+            document.getElementById('loader-overlay').style.display = 'flex';
             fetch('/', {
                 method: 'POST',
                 body: new URLSearchParams(new FormData(document.getElementById('plot_form'))),
@@ -72,6 +77,7 @@
                     'Content-Type': 'application/x-www-form-urlencoded',
                 },
             })
+            .then(document.getElementById('confirm').disabled = true)
             .then(response => response.json())
             .then(data => {
                 var graphs = data.graphs;
@@ -84,7 +90,12 @@
                 });
 
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => console.error('Error:', error))
+            .finally(() => {
+                document.getElementById('loader-overlay').style.display = 'none';
+                document.getElementById('confirm').disabled = false;
+                console.log('loool');
+            });
         }
     </script>
 

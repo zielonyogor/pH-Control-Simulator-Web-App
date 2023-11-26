@@ -1,7 +1,7 @@
 html {
     font-family: Baloo,system-ui,sans-serif;
     letter-spacing: 1px;
-    background-color: #F7F3E3;
+    background-color: var(--plot-background);
 }
 
 :root{
@@ -21,26 +21,30 @@ body {
 
 .column{
     float: left;
-    padding: 10px;
-    height: 1000px;
 }
 
 .plot__form{
     position: fixed;
     width: 30%;
+    height: 100%;
+    padding: 10px;
+    background-color: #F7F3E3;
 }
 
 .plots{
     width: 70%;
-    height: 2205px; /*ustawić w zależności od ułożenia wykresów*/
+    height: 100vh; /*ustawić w zależności od ułożenia wykresów*/
     margin-left: 30%; /*to zależy od plot__form width%*/
     background-color: var(--plot-background);
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    scroll-snap-stop: always;
 }
 
 .graph{
     width: 90%;
     margin: auto;
-    margin-bottom: 40px;
+    scroll-snap-align: start;
 }
 
 .form__fieldset{
@@ -147,7 +151,77 @@ body {
     border: no;
 }
 
-.form__submit:hover{
+.form__submit:not(:disabled):hover{
     filter: brightness(140%);
 }
 
+.form__submit:disabled{
+    filter: brightness(160%);
+}
+
+.loader-overlay {
+    position: fixed;
+    width: 70%;
+    height: 100%;
+    margin-left: 30%;
+    background: rgba(2, 2, 2, 0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+.cssload-loading{
+	width: 22px;
+	height: 22px;
+	text-align: left;
+	animation:cssload-loading-ani1 2.3s ease-in-out infinite;
+		-o-animation:cssload-loading-ani1 2.3s ease-in-out infinite;
+		-webkit-animation:cssload-loading-ani1 2.3s ease-in-out infinite;
+}
+.cssload-loading i,
+.cssload-loading i:before{
+	content: "";
+	width: 22px;
+	height: 22px;
+	position: absolute;
+}
+.cssload-loading i{
+	border-radius: 50%; 
+	overflow: hidden;
+}
+.cssload-loading i:nth-child(1){
+	background: var(--input);
+	transform:translate(0,-18px);
+		-o-transform:translate(0,-18px);
+		-webkit-transform:translate(0,-18px);
+}
+.cssload-loading i:nth-child(2){
+	background: var(--input);
+	transform:translate(0,18px);
+		-o-transform:translate(0,18px);
+		-webkit-transform:translate(0,18px);
+}
+
+@keyframes cssload-loading-ani1{
+	40%,50%{
+		transform:rotate(180deg);
+	}
+	90%,100%{
+		transform:rotate(360deg);
+	}
+}
+
+@-o-keyframes cssload-loading-ani1{
+	40%,50%{
+		-o-transform:rotate(180deg);
+	}
+	90%,100%{
+		-o-transform:rotate(360deg);
+	}
+}
+
+@-webkit-keyframes cssload-loading-ani1{
+	90%,100%{
+		-webkit-transform:rotate(360deg);
+	}
+}
