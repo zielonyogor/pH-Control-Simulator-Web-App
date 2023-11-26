@@ -32,7 +32,7 @@ body {
 
 .plots{
     width: 70%;
-    height: 2940px; /*ustawić w zależności od ułożenia wykresów*/
+    height: 2205px; /*ustawić w zależności od ułożenia wykresów*/
     margin-left: 30%; /*to zależy od plot__form width%*/
     background-color: var(--plot-background);
 }
