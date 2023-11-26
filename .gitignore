@@ -10,3 +10,7 @@ dist/
 venv/
 .venv/
 instance/
+*.aux
+*.log
+*.synctex
+*.synctex.gz
