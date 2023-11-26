@@ -1,11 +1,18 @@
 html {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Baloo,system-ui,sans-serif;
+    letter-spacing: 1px;
     background-color: #F7F3E3;
+}
+
+:root{
+    --plot-background: #1c7293;
+    --input: #62a87c;
+    --font-main: #1A1D1A;
 }
 
 body {
     margin: 0 auto;
-    color: #1A1D1A;
+    color: var(--font-main);
 }
 
 * {
@@ -21,14 +28,13 @@ body {
 .plot__form{
     position: fixed;
     width: 30%;
-    /* border-right: 10px solid rgb(196, 109, 94); */
 }
 
 .plots{
     width: 70%;
     height: 3000px; /*ustawić w zależności od ułożenia wykresów*/
     margin-left: 30%; /*to zależy od plot__form width%*/
-    background-color: rgb(83, 125, 141);
+    background-color: var(--plot-background);
 }
 
 .graph{
@@ -41,12 +47,14 @@ body {
     margin: 30px;
     font-size: large;
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
 }
 
 .form__label{
-    width: 60%;
+    width: auto;
+    margin-right: 20px;
     margin-bottom: 10px;
+    font-weight: 600;
 }
 
 .number{
@@ -56,14 +64,19 @@ body {
 .form__select{
     width: 100%;
     min-width: 15ch;
-    max-width: 30ch;
     /* border: 3px solid rgb(83, 125, 141); */
-    background-color: rgb(152, 114, 132);
-    border-radius: 0.25em;
+    font-family: Baloo,system-ui,sans-serif; /*trzeba nie wiem czemu w przyciskach powtarzać font*/
+    letter-spacing: 1px;
+    color: var(--font-main);
+    background-color: var(--input);
+    border-radius: 0.4em;
     padding: 0.25em 0.5em;
-    font-size: 1.25rem;
+    font-size: medium;
     cursor: pointer;
-    line-height: 1.1;
+}
+
+.form__select:hover{
+    filter: brightness(80%);
 }
 
 .form__slider {
@@ -84,14 +97,57 @@ body {
     width: 25px;
     height: 25px;
     border-radius: 1em;
-    background: rgb(152, 114, 132);
+    background: var(--input);
     cursor: pointer;
+}
+
+.form__slider::-moz-range-thumb:hover,
+.form__slider::-webkit-slider-thumb:hover{
+    filter: brightness(80%);
 }
 
 .form__slider::-moz-range-thumb {
     width: 25px;
     height: 25px;
     border-radius: 1em;
-    background: rgb(152, 114, 132);
+    background: var(--input);
     cursor: pointer;
 }
+
+.button{
+    font-size: medium;
+    font-family: Baloo,system-ui,sans-serif; /*trzeba nie wiem czemu w przyciskach powtarzać font*/
+    letter-spacing: 1px;
+    color: var(--font-main);
+    font-weight: 600;
+    cursor: pointer;
+    margin: auto;
+    width: 100%;
+    height: 34px;
+    background-color: var(--input);
+    border:  none;
+    border-radius: 0.4em;
+}
+
+.button:hover{
+    filter: brightness(80%);
+}
+
+.button:active{
+    filter: brightness(70%);
+}
+
+.form__submit{
+    background-color: var(--font-main);
+    height: 60px;
+    font-size: x-large;
+    font-weight: 700;
+    margin-top: 30px;
+    color: #d3d3d3;
+    border: no;
+}
+
+.form__submit:hover{
+    filter: brightness(140%);
+}
+
