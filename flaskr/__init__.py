@@ -35,9 +35,14 @@ def create_app(test_config=None):
         if request.method == 'POST':
 
             acid_name = request.form.get('substance')
+            cp = request.form.get('cp')
+            cp_level = request.form.get('cp_level')
+            cp_type = request.form.get('cp_type')
+            pH = request.form.get('pH')
+            control_system = request.form.get('control_system')
             acid = next((acid for acid in ljtp.acid_list if acid.name == acid_name), None)
 
-            [fig1, fig2, fig3, fig4] = ljtp.create_plot(acid)
+            [fig1, fig2, fig3, fig4] = ljtp.create_plot(acid, cp, cp_level, cp_type, pH, control_system)
             
             return jsonify({'graphs': [{'id': 'graph1', 'graphJSON': json.dumps(fig1, cls=plotly.utils.PlotlyJSONEncoder)},
                                        {'id': 'graph2', 'graphJSON': json.dumps(fig2, cls=plotly.utils.PlotlyJSONEncoder)},

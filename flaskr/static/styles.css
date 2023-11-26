@@ -32,13 +32,13 @@ body {
 
 .plots{
     width: 70%;
-    height: 3000px; /*ustawić w zależności od ułożenia wykresów*/
+    height: 2940px; /*ustawić w zależności od ułożenia wykresów*/
     margin-left: 30%; /*to zależy od plot__form width%*/
     background-color: var(--plot-background);
 }
 
 .graph{
-    width: 80%;
+    width: 90%;
     margin: auto;
     margin-bottom: 40px;
 }
