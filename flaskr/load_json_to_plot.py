@@ -44,12 +44,14 @@ def create_plot(acid, cp, cp_level, cp_type, given_pH, control_system):
 
     Qo = [B*sqrt(h[-1])]   # m^3/s - natężenie wypływu
 
-    k_p = 0.02   # wzmocnienie regulatora
-    Ti = 2.5   # czas zdwojenia
     if control_system == 'pi':   # wybór systemu regulatora
         Td = 0.0
+        Ti = 2.5   # czas zdwojenia
+        k_p = 0.02   # wzmocnienie regulatora
     else:
-        Td = 1.0
+        Td = 25.0 / (float(cp))
+        Ti = 2.5
+        k_p = 0.23
     u_pid = [0.0]   # napięcie regulatora PI
     u = [0.0]   # napięcie aktualne
     u_min = 0.0   # napięcie minimalne
