@@ -116,7 +116,7 @@ def create_plot(acid, cp, cp_level, cp_type, given_pH, control_system):
     fig1.add_trace(go.Scatter(x=t, y=pH_cp, mode='lines', name='pH dopływu kwasu'), row=1, col=1)
     fig1.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=950, height=700, paper_bgcolor="#1c7293", legend=dict(x=0.7, y=0.1, bgcolor='#F7F3E3'), showlegend=True)
     fig1.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.0f', title_text='t[s]')
-    fig1.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f', title_text='pH[-]')
+    fig1.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', title_text='pH[-]')
     fig1.update_traces(marker=dict(size=1))
     fig1.update_annotations(font=dict(color='#F7F3E3', size=24))
 
@@ -126,7 +126,7 @@ def create_plot(acid, cp, cp_level, cp_type, given_pH, control_system):
     fig2.add_trace(go.Scatter(x=t, y=Qo, mode='lines', name='natężenie odpływu'), row=1, col=1)
     fig2.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=950, height=700, paper_bgcolor="#1c7293", legend=dict(x=0.65, y=0.1, bgcolor='#F7F3E3'), showlegend=True)
     fig2.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.0f', title_text='t[s]')
-    fig2.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f', title_text='Q[m³/s]')
+    fig2.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', title_text='Q[m³/s]')
     fig2.update_annotations(font=dict(color='#F7F3E3', size=24))
     
     fig3 = sp.make_subplots(rows=1, cols=1, subplot_titles=['Wykres zależności napięć'])
@@ -134,7 +134,7 @@ def create_plot(acid, cp, cp_level, cp_type, given_pH, control_system):
     fig3.add_trace(go.Scatter(x=t, y=u, mode='lines', name='napięcie aktualne pompy'), row=1, col=1)
     fig3.update_layout(title_font=dict(size=16, color='#F7F3E3'), width=950, height=700, paper_bgcolor="#1c7293", legend=dict(x=0.05, y=0.05, bgcolor='#F7F3E3'), showlegend=True)
     fig3.update_xaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.0f', title_text='t[s]')
-    fig3.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', tickformat='.3f', title_text='U[V]')
+    fig3.update_yaxes(color='#F7F3E3', tickcolor='#F7F3E3', title_text='U[V]')
     fig3.update_annotations(font=dict(color='#F7F3E3', size=24))
 
     return [fig1, fig2, fig3]
