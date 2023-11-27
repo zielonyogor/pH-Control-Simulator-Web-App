@@ -25,7 +25,7 @@
         <div class="form__fieldset">
             <label for="cp" class="form__label">Stężenie kwasu:</label>
             <output class="number" id="shown_cp">50%</output>
-            <input type="range" name="cp" id="cp" class="form__slider" min="0" max="1" step="0.01" value="0.5" oninput="this.previousElementSibling.value = (this.value*100).toFixed(0)+'%'">
+            <input type="range" name="cp" id="cp" class="form__slider" min="0.01" max="1" step="0.01" value="0.5" oninput="this.previousElementSibling.value = (this.value*100).toFixed(0)+'%'">
         </div>
 
         <div class="form__fieldset">
@@ -89,39 +89,33 @@
                     Plotly.react(graphID, graphJSON, {});
                 });
 
+                
             })
             .catch(error => console.error('Error:', error))
             .finally(() => {
+                document.getElementById('graphs').scrollTop = 0;
                 document.getElementById('loader-overlay').style.display = 'none';
                 document.getElementById('confirm').disabled = false;
-                console.log('loool');
             });
         }
     </script>
 
     <script>
-        //zmienianie pH_min, cp_min, cp_max i ewentualnie pH, cp na sliderze podczas zmieniania kwasu
+        //zmienianie pH_min, cp_max i ewentualnie pH, cp na sliderze podczas zmieniania kwasu
         document.getElementById('substance').addEventListener('change', function() {
             var option = this.options[this.selectedIndex];
             
             var new_pH_min = parseFloat(option.getAttribute('pH_min')).toFixed(2);
             var current_pH = parseFloat(document.getElementById('pH').value).toFixed(2);
 
-            var new_cp_min = parseFloat(option.getAttribute('cp_min')).toFixed(2);
             var new_cp_max = parseFloat(option.getAttribute('cp_max')).toFixed(2);
             var current_cp = parseFloat(document.getElementById('cp').value).toFixed(2);
-            console.log(new_cp_max);
-            console.log(new_cp_min);
+
             document.getElementById('pH').min = new_pH_min;
-            document.getElementById('cp').min = new_cp_min;
             document.getElementById('cp').max = new_cp_max;
             if(current_pH < new_pH_min){
                 document.getElementById('pH').value = new_pH_min;
                 document.getElementById('shown_pH').value = new_pH_min;
-            }
-            if(current_cp < new_cp_min){
-                document.getElementById('cp').value = new_cp_min;
-                document.getElementById('shown_cp').value = (new_cp_min * 100) + '%';
             }
             else if(current_cp > new_cp_max){
                 document.getElementById('cp').value = new_cp_max;

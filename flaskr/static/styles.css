@@ -68,7 +68,6 @@ body {
 .form__select{
     width: 100%;
     min-width: 15ch;
-    /* border: 3px solid rgb(83, 125, 141); */
     font-family: Baloo,system-ui,sans-serif; /*trzeba nie wiem czemu w przyciskach powtarzać font*/
     letter-spacing: 1px;
     color: var(--font-main);
