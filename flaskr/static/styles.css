@@ -43,12 +43,14 @@ body {
 
 .graph{
     width: 90%;
+    height: 100%;
     margin: auto;
     scroll-snap-align: start;
 }
 
 .form__fieldset{
     margin: 30px;
+    margin-top: 10px;
     font-size: large;
     display: flex;
     flex-wrap: wrap;

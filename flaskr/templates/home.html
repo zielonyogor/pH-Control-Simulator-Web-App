@@ -29,22 +29,24 @@
         </div>
 
         <div class="form__fieldset">
-            <button type="button" class="button" id="cp_button">Słabe zakłócenie</button>
+            <label for="cp_level" class="form__label">Zakłócenie:</label>
+            <button type="button" class="button" id="cp_button">Słabe</button>
             <input type="hidden" name="cp_level" id="cp_level" value="mild">
         </div>
 
-        <div class="form__fieldset" id="cp_type_button">
+        <div class="form__fieldset" >
             <button type="button" class="button" id="type_button">Sinusoidalne</button>
             <input type="hidden" name="cp_type" id="cp_type" value="sin">
         </div>
         
         <div class="form__fieldset">
             <label for="pH" class="form__label">Docelowe pH:</label>
-            <output class="number" id="shown_pH">5</output>
-            <input type="range" name="pH" id="pH" class="form__slider" min="0" max="5" step="0.01" value="5" oninput="this.previousElementSibling.value = this.value">
+            <output class="number" id="shown_pH">1.91</output>
+            <input type="range" name="pH" id="pH" class="form__slider" min="-1.17" max="5" step="0.01" value="1.91" oninput="this.previousElementSibling.value = this.value">
         </div>
 
         <div class="form__fieldset">
+            <label for="cp" class="form__label">Rodzaj regulatora:</label>
             <button type="button" class="button" id="control_button">PI</button>
             <input type="hidden" name="control_system" id="control_system" value="pi">
         </div>
@@ -127,14 +129,13 @@
     <script>
         var button = document.getElementById('cp_button');
         var cp_input = document.getElementById('cp_level');
-        var type_button = document.getElementById('cp_type_button');
         button.addEventListener('click', function() {
-            if(button.textContent == "Słabe zakłócenie"){
-                    button.textContent = "Mocne zakłócenie";
+            if(button.textContent == "Słabe"){
+                    button.textContent = "Mocne";
                     cp_input.value = "heavy";
             }
             else{
-                button.textContent = "Słabe zakłócenie";
+                button.textContent = "Słabe";
                 cp_input.value = "mild";
             } 
         });
