@@ -1,4 +1,4 @@
-# pH Control Simulator with Acid Regulation
+# pH Control Simulator Web App
 
 Project made for Basics Of Control Engineering laboratories at Poznań University of Technology.
 
