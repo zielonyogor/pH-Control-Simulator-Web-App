@@ -18,4 +18,6 @@ flask --app flaskr run --debug
 * [acid.py](flaskr/acid.py) - introduces acid class with formulas and functions used when calculating results for chosen acid
 * [load_json_to_plot.py](flaskr/load_json_to_plot.py) - creates plots from results using [plotly](https://plotly.com/python/)
 * [__init__.py](flaskr/__init__.py) - launches app using python, [html](flaskr/templates/home.html) and [css](flaskr/static/styles.css) files
-* [acids.json](flaskr/acids.json) - stores data about available acids
+* [acids.json](flaskr/acids.json) - stores data about available acids<br /><br />
+
+<img src="documentation/images/mlekowy_88_2_69.png" alt="drawing" width="750"/>
